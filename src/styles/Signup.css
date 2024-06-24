@@ -76,3 +76,13 @@
     margin-bottom: 1rem;
     text-align: center;
 }
+
+.login-redirect {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login-redirect a {
+    color: blue; /* or any color you prefer */
+    text-decoration: underline;
+}

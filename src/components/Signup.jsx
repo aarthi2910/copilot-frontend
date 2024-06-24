@@ -1,7 +1,7 @@
-// Signup.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import '../styles/Signup.css';
+import {  setRole, setToken, setUsername , setUseremail } from "../utils/Auth";
 
 export default function Signup() {
     const [username, setUsername] = useState("");
@@ -10,6 +10,7 @@ export default function Signup() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [tooltipMessage, setTooltipMessage] = useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,16 +30,34 @@ export default function Signup() {
             });
 
             if (!response.ok) {
-                throw new Error('Signup failed');
+                // throw new Error('Signup failed');
+                setTooltipMessage('Signup failed');
             }
 
             const data = await response.json();
             console.log('Signup success:', data);
+            setTooltipMessage(data.Status);
 
-            navigate("../utils/protected");
+            if (data['access_token']) {
+                // Assuming setToken, setUsername, setUseremail, and setRole are defined somewhere in the context or props
+                setToken(data['access_token']);
+                setUsername(data['user_name']);
+                setUseremail(data['user_email']);
+                setRole(data['role']);
+                navigate('../utils/protected');
+            } else {
+                // throw new Error('Invalid token received');
+                setTooltipMessage('Invalid token received');
+            }
         } catch (error) {
             console.error('Error:', error);
             setError('Signup failed');
+            setTooltipMessage('Signup failed');
+            
+        }finally {
+            setTimeout(() => {
+                setTooltipMessage(null); 
+            }, 2000);
         }
     };
 
@@ -89,6 +108,14 @@ export default function Signup() {
                 </div>
                 <button type="submit" className="signup-button">Sign Up</button>
             </form>
+            <div className="login-redirect">
+                Already have an account? <Link to="../components/login">Log in</Link>
+            </div>
+            {tooltipMessage && (
+                <div className="tooltip">
+                    {tooltipMessage}
+                </div>
+            )}
         </div>
     );
 }

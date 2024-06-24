@@ -46,4 +46,14 @@ export function RequireToken({children}){
     }
 
     return children;
+    // const navigate = useNavigate();
+    // const token = fetchToken();
+
+    // useEffect(() => {
+    //     if (!token) {
+    //         navigate('/');
+    //     }
+    // }, [token, navigate]);
+
+    // return token ? children : null;
 }

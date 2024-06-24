@@ -85,3 +85,13 @@
   color: red;
   font-size: 14px;
 }
+
+.signup-redirect {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signup-redirect a {
+  color: blue; /* or any color you prefer */
+  text-decoration: underline;
+}
