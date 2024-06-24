@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "../components/Login";
 import Profile from "../components/Profile";
 import { RequireToken } from "../utils/Auth";
-// import ProtectedPage from './protected';
+import ProtectedPage from '../utils/protected';
 import Signup from "../components/Signup";
 
 function App() {
@@ -12,9 +12,9 @@ function App() {
     <div className="App">
         <div className ="App">
         {/* <Login />  */}
-        <Profile /> 
+        {/* <Profile />  */}
         {/* <Signup /> */}
-            {/* <Router>   
+            {/* <Router>    */}
                 <Routes>
                     <Route path="/" element = {<Login/>}/>
                     <Route path="/profile"
@@ -24,9 +24,10 @@ function App() {
                             </RequireToken>
                         }
                         />
-                    <Route path='/protected' element={<ProtectedPage />}/>
+                    <Route path='/components/protected' element={<ProtectedPage />}/>
+                    <Route path='/components/Signup' element={<Signup />}/>
                 </Routes>
-            </Router>  */}
+            {/* </Router>  */}
         </div>
     </div>
   );

@@ -20,7 +20,7 @@ export default function Signup() {
         }
 
         try {
-            const response = await fetch('http://localhost:8000//user/signup', {
+            const response = await fetch('http://localhost:8000/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export default function Signup() {
             const data = await response.json();
             console.log('Signup success:', data);
 
-            navigate("../components/Login");
+            navigate("../utils/protected");
         } catch (error) {
             console.error('Error:', error);
             setError('Signup failed');
