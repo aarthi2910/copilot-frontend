@@ -2,11 +2,12 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { List, Plus, Question, ClockCounterClockwise, EnvelopeSimple, Paperclip, User, SignOut, UserCircle, Robot } from 'phosphor-react';
 import '../styles/Profile.css';
-import { fecthUsername, fecthUseremail, fecthRole } from "../utils/Auth";
+import { fecthUsername, fecthUseremail, fecthRole,fetchToken, logout } from "../utils/Auth";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function Profile() {
     const navigate = useNavigate();
+    const token = fetchToken(localStorage) || fetchToken(sessionStorage);
     const username = fecthUsername();
     const userRole = fecthRole();
     const useremail = fecthUseremail();
@@ -20,8 +21,14 @@ export default function Profile() {
     const signOut = () => {
         console.log('checkin');
         localStorage.removeItem("token");
+        logout(localStorage);
+        logout(sessionStorage);
         navigate("/");
     };
+    if (!token) {
+        navigate('/');
+        return null;
+    }
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
