@@ -17,13 +17,7 @@ function App() {
             {/* <Router>    */}
                 <Routes>
                     <Route path="/" element = {<Login/>}/>
-                    <Route path="/profile"
-                        element={
-                            <RequireToken>
-                            <Profile />
-                            </RequireToken>
-                        }
-                        />
+                    <Route path="/profile"element={<Profile />}/>
                     <Route path='/protected' element={<ProtectedPage />}/>
                     <Route path='/components/Signup' element={<Signup />}/>
                 </Routes>

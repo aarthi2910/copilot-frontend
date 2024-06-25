@@ -2,20 +2,29 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { List, Plus, Question, ClockCounterClockwise, EnvelopeSimple, Paperclip, User, SignOut, UserCircle, Robot } from 'phosphor-react';
 import '../styles/Profile.css';
-import { fecthUsername, fecthUseremail, fecthRole } from "../utils/Auth";
+import { fecthUsername, fecthUseremail, fecthRole, fetchLoginStatus, setLoginStatus } from "../utils/Auth";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+// import { Toaster, toast } from "sonner";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Profile() {
     const navigate = useNavigate();
     const username = fecthUsername();
     const userRole = fecthRole();
     const useremail = fecthUseremail();
+    const loginStatus = fetchLoginStatus();
     const [inputText, setInputText] = useState("");
     const [isLoading, setIsLoading] = useState(false); 
     const [messages, setMessages] = useState([]); 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
     const fileInputRef = useRef(null);
     const [tooltipMessage, setTooltipMessage] = useState(null);
+
+    // const notify_sonner = () =>{
+    //     // toast.success("logged in successfully!!")
+    //    toast("logged in successfully!!");
+    // }
 
     const signOut = () => {
         console.log('checkin');
@@ -117,8 +126,22 @@ export default function Profile() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    var displayLoginMessage = (function(){
+        console.log(loginStatus)
+        return function(){
+            if(loginStatus === "true"){
+                // notify_sonner()
+                setLoginStatus("flase")
+                toast("logged in successfully!!");
+            }
+        }
+    })();
+    // displayLoginMessage();
+    // setTimeout(displayLoginMessage, 3000);
+
     return (
         <div className="profile-page">
+            {displayLoginMessage()}
             <div className="content-wrapper">
                 {isLoading && (
                     <div className="spinner-overlay">
@@ -200,6 +223,8 @@ export default function Profile() {
                     )}
                 </div>
             </div>
+            {/* <Toaster richColors /> */}
+            <ToastContainer />
         </div>
     );
 }
