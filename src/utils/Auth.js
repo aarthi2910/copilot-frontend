@@ -16,7 +16,9 @@ export const setUseremail = (useremail, storage = sessionStorage) => {
 export const setRole = (role, storage = sessionStorage) => {
     storage.setItem('role', role);
 };
-
+export const setLoginStatus = (status) => {
+    localStorage.setItem('loginStatus', status)
+}
 // fetch items
 export const fetchToken = (storage = sessionStorage)=>{
     return storage.getItem('token')
@@ -32,6 +34,10 @@ export const fecthUseremail = (storage = sessionStorage) => {
 
 export const fecthRole = (storage = sessionStorage) => {
     return storage.getItem('userrole')
+}
+
+export const fetchLoginStatus = () => {
+    return localStorage.getItem('loginStatus')
 }
 
 export function RequireToken({children}){

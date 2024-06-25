@@ -4,6 +4,8 @@ import { List, Plus, Question, ClockCounterClockwise, EnvelopeSimple, Paperclip,
 import '../styles/Profile.css';
 import { fecthUsername, fecthUseremail, fecthRole,fetchToken, logout } from "../utils/Auth";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -11,6 +13,7 @@ export default function Profile() {
     const username = fecthUsername();
     const userRole = fecthRole();
     const useremail = fecthUseremail();
+    const loginStatus = fetchLoginStatus();
     const [inputText, setInputText] = useState("");
     const [isLoading, setIsLoading] = useState(false); 
     const [messages, setMessages] = useState([]); 
@@ -123,6 +126,17 @@ export default function Profile() {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+    var displayLoginMessage = (function(){
+        console.log(loginStatus)
+        return function(){
+            if(loginStatus === "true"){
+                // notify_sonner()
+                setLoginStatus("flase")
+                toast("logged in successfully!!");
+            }
+        }
+    })();
+    displayLoginMessage();
 
     return (
         <div className="profile-page">

@@ -40,11 +40,7 @@ export default function Login() {
                 setUsername(data['user_name'], storage);
                 setUseremail(data['user_email'], storage);
                 setRole(data['role'], storage);
-
-                // show the tooltip message and then navigate to the profile page
-                setTimeout(() => {
-                    navigate('/protected');
-                }, 2000); 
+                navigate('/protected');
             } else {
                 setTooltipMessage('Invalid token received');
             }
