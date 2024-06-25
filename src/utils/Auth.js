@@ -16,9 +16,6 @@ export const setUseremail = (useremail) => {
 export const setRole = (role) => {
     localStorage.setItem('userrole', role)
 }
-export const setLoginStatus = (status) => {
-    localStorage.setItem('loginStatus', status)
-}
 
 
 // fetch items
@@ -36,10 +33,6 @@ export const fecthUseremail = () => {
 
 export const fecthRole = () => {
     return localStorage.getItem('userrole')
-}
-
-export const fetchLoginStatus = () => {
-    return localStorage.getItem('loginStatus')
 }
 
 export function RequireToken({children}){

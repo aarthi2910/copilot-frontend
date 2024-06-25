@@ -1,10 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
-import { fetchToken, setRole, setToken, setUsername, setUseremail, setLoginStatus } from "../utils/Auth";
+import { fetchToken, setRole, setToken, setUsername, setUseremail } from "../utils/Auth";
 import { useState } from "react";
 import '../styles/Login.css';
-// import { ToastContainer, toast } from 'react-toastify';
-// import { Toaster, toast } from "sonner";
-// import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -41,7 +38,6 @@ export default function Login() {
                 setUsername(data['user_name']);
                 setUseremail(data['user_email']);
                 setRole(data['role']);
-                setLoginStatus("true")
                 navigate('/protected');
             } else {
                 // throw new Error('Invalid token received');
@@ -58,45 +54,42 @@ export default function Login() {
         }
     };
 
-    // const notify_sonner = () =>{
-    //     toast.success("logged in successfully!!")
-    // }
-
     return (
         <div className="container">
             <h1 className="h1">Login Page</h1>
             <div>
-    
-                <div>
-                    {error && <p className="error">{error}</p>}
-                    <form className="login_form" onSubmit={login}>
-                        <label className="label">Email</label>
-                        <input
-                            className="input"
-                            type="text"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <label className="label">Password</label>
-                        <input
-                            className="input"
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button className="button" type="submit">Login</button>
-                    </form>
-                    <div className="signup-redirect">
-                        Don't have an account? <Link to="/components/signup">Sign up</Link>
+                {fetchToken() ? (
+                    navigate("../utils/protected")
+                ) : (
+                    <div>
+                        {error && <p className="error">{error}</p>}
+                        <form className="login_form" onSubmit={login}>
+                            <label className="label">Email</label>
+                            <input
+                                className="input"
+                                type="text"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <label className="label">Password</label>
+                            <input
+                                className="input"
+                                type="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <button className="button" type="submit">Login</button>
+                        </form>
+                        <div className="signup-redirect">
+                            Don't have an account? <Link to="/components/signup">Sign up</Link>
+                        </div>
                     </div>
-                </div>
                     
+                )}
             </div>
             {tooltipMessage && (
                 <div className="tooltip">
                     {tooltipMessage}
                 </div>
             )}
-            {/* <ToastContainer /> */}
-            {/* <Toaster richColors /> */}
         </div>
     );
 }
