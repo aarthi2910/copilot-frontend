@@ -24,7 +24,7 @@ function App() {
                             </RequireToken>
                         }
                         />
-                    <Route path='/components/protected' element={<ProtectedPage />}/>
+                    <Route path='/protected' element={<ProtectedPage />}/>
                     <Route path='/components/Signup' element={<Signup />}/>
                 </Routes>
             {/* </Router>  */}

@@ -46,8 +46,9 @@ function ProtectedPage() {
                 const data = await response.json();
                 console.log(data);
 
-                if (data && data.valid) {
+                if (data) {
                     setIsVerified(true);
+                    console.log("*****************************")
                     navigate('/profile');
                 } else {
                     console.log("Token verification failed");

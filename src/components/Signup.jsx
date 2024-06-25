@@ -36,7 +36,7 @@ export default function Signup() {
 
             const data = await response.json();
             console.log('Signup success:', data);
-            setTooltipMessage(data.Status);
+            setTooltipMessage(data['status']);
 
             if (data['access_token']) {
                 // Assuming setToken, setUsername, setUseremail, and setRole are defined somewhere in the context or props
@@ -44,7 +44,7 @@ export default function Signup() {
                 setUsername(data['user_name']);
                 setUseremail(data['user_email']);
                 setRole(data['role']);
-                navigate('../utils/protected');
+                navigate('/protected');
             } else {
                 // throw new Error('Invalid token received');
                 setTooltipMessage('Invalid token received');
@@ -109,7 +109,7 @@ export default function Signup() {
                 <button type="submit" className="signup-button">Sign Up</button>
             </form>
             <div className="login-redirect">
-                Already have an account? <Link to="../components/login">Log in</Link>
+                Already have an account? <Link to="/">Log in</Link>
             </div>
             {tooltipMessage && (
                 <div className="tooltip">

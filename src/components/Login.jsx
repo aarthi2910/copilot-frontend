@@ -29,15 +29,16 @@ export default function Login() {
                 setTooltipMessage('Network response was not ok');
             }
             const data = await response.json();
+            console.log(data)
             console.log(data['access_token'], "response.data.token");
-            setTooltipMessage(data.status);
+            setTooltipMessage(data['status']);
 
             if (data['access_token']) {
                 setToken(data['access_token']);
                 setUsername(data['user_name']);
                 setUseremail(data['user_email']);
                 setRole(data['role']);
-                navigate('../components/protected');
+                navigate('/protected');
             } else {
                 // throw new Error('Invalid token received');
                 setTooltipMessage('Invalid token received');
@@ -58,7 +59,7 @@ export default function Login() {
             <h1 className="h1">Login Page</h1>
             <div>
                 {fetchToken() ? (
-                    navigate("../components/protected")
+                    navigate("../utils/protected")
                 ) : (
                     <div>
                         {error && <p className="error">{error}</p>}
@@ -78,7 +79,7 @@ export default function Login() {
                             <button className="button" type="submit">Login</button>
                         </form>
                         <div className="signup-redirect">
-                            Don't have an account? <Link to="/signup">Sign up</Link>
+                            Don't have an account? <Link to="/components/signup">Sign up</Link>
                         </div>
                     </div>
                     
