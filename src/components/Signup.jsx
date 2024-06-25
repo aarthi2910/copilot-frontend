@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import '../styles/Signup.css';
-import {  setRole, setToken, setUsername , setUseremail } from "../utils/Auth";
+// import {  setRole, setToken, setUsername , setUseremail } from "../utils/Auth";
+import { fetchToken, setRole, setToken, setUsername, setUseremail } from "../utils/Auth";
 
 export default function Signup() {
     const [username, setUsername] = useState("");
@@ -39,11 +40,11 @@ export default function Signup() {
             setTooltipMessage(data['status']);
 
             if (data['access_token']) {
-                // Assuming setToken, setUsername, setUseremail, and setRole are defined somewhere in the context or props
-                setToken(data['access_token']);
-                setUsername(data['user_name']);
-                setUseremail(data['user_email']);
-                setRole(data['role']);
+                const storage = rememberMe ? localStorage : sessionStorage;
+                setToken(data['access_token'], storage);
+                setUsername(data['user_name'], storage);
+                setUseremail(data['user_email'], storage);
+                setRole(data['role'], storage);
                 navigate('/protected');
             } else {
                 // throw new Error('Invalid token received');

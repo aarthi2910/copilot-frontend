@@ -9,6 +9,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [tooltipMessage, setTooltipMessage] = useState(null);
+    const [rememberMe, setRememberMe] = useState(false);
 
     const login = async (event) => {
         event.preventDefault();
@@ -25,8 +26,8 @@ export default function Login() {
                 body: JSON.stringify({ email, password })
             });
             if (!response.ok) {
-                // throw new Error('Network response was not ok');
                 setTooltipMessage('Network response was not ok');
+                return;
             }
             const data = await response.json();
             console.log(data)
@@ -34,20 +35,20 @@ export default function Login() {
             setTooltipMessage(data['status']);
 
             if (data['access_token']) {
-                setToken(data['access_token']);
-                setUsername(data['user_name']);
-                setUseremail(data['user_email']);
-                setRole(data['role']);
+                const storage = rememberMe ? localStorage : sessionStorage;
+                setToken(data['access_token'], storage);
+                setUsername(data['user_name'], storage);
+                setUseremail(data['user_email'], storage);
+                setRole(data['role'], storage);
                 navigate('/protected');
             } else {
-                // throw new Error('Invalid token received');
                 setTooltipMessage('Invalid token received');
             }
         } catch (error) {
             setError('Invalid credentials');
             console.error('Error:', error);
             setTooltipMessage('Invalid credentials');
-        }finally {
+        } finally {
             setTimeout(() => {
                 setTooltipMessage(null); 
             }, 2000);
@@ -59,7 +60,7 @@ export default function Login() {
             <h1 className="h1">Login Page</h1>
             <div>
                 {fetchToken() ? (
-                    navigate("../utils/protected")
+                    navigate("/protected")
                 ) : (
                     <div>
                         {error && <p className="error">{error}</p>}
@@ -77,6 +78,14 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <button className="button" type="submit">Login</button>
+                            <label className="remember-me">
+                                <input
+                                    type="checkbox"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />
+                                Remember Me
+                            </label>
                         </form>
                         <div className="signup-redirect">
                             Don't have an account? <Link to="/components/signup">Sign up</Link>
